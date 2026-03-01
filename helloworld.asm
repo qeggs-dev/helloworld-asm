@@ -58,7 +58,7 @@ func__power_off:
 
     jc .fallback_shutdown ; 如果APM调用失败，则跳转到fallback_shutdown
 
-    jmp $ ; 启用无限循环，防止程序继续执行
+    jmp $ ; 保底无限循环，防止程序继续执行，理论上不会执行到这里
 
 .fallback_shutdown:
     mov si, fallback_shutdown_message ; 将字符串地址存储在SI寄存器中(传参)
@@ -68,7 +68,7 @@ func__power_off:
     mov bx, 0x0001
     int 0x15
 
-    jmp $ ; 启用无限循环，防止程序继续执行
+    jmp $ ; 启用无限循环，防止程序继续执行内存中的随机指令导致损坏数据或硬件
 
 ; === Data Section ===
 hello: db 'Hello World!',0
